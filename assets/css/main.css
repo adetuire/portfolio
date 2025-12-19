@@ -885,7 +885,7 @@ input, select, textarea {
 		-webkit-flex-wrap: wrap;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
-		postiion: relative;
+		position: relative;
 		margin: -2.5em 0 0 -2.5em;
 	}
 
@@ -1495,3 +1495,24 @@ input, select, textarea {
 			}
 
 		}
+
+/* Home-Tiles */
+/* Force Contact tile to sit under Projects (desktop 3-col layout) */
+@media screen and (min-width: 981px) {
+  .tiles.home-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5em;
+    margin: 0;
+  }
+
+  .tiles.home-tiles article {
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  .tiles.home-tiles article.style4 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
