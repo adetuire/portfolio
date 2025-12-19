@@ -144,6 +144,43 @@
             <script src="assets/js/breakpoints.min.js"></script>
             <script src="assets/js/util.js"></script>
             <script src="assets/js/main.js"></script>
+            <script>   
+            window.addEventListener('load', () => {
+                const grid = document.querySelector('.tiles.home-tiles');
+                if (!grid) return;
+                const num = (prop) => parseFloat(getComputedStyle(grid).getPropertyValue(prop)) || 0;
 
+                function isGridOn() {
+                    return getComputedStyle(grid).display === 'grid';
+                }
+
+                function resizeItem(item) {
+                    if (!isGridOn()) {
+                        item.style.gridRowEnd = '';
+                        return;
+                    }
+                    const rowHeight = num('grid-auto-rows');
+                    const rowGap = num('grid-row-gap');
+                    if (!rowHeight) return;
+
+                    const content = item.querySelector('.image') || item;
+                    const contentHeight = content.getBoundingClientRect().height;
+
+                    const span = Math.ceil((contentHeight + rowGap) / (rowHeight + rowGap));
+                    item.style.gridRowEnd = `span ${span}`;
+                }
+                function resizeAll() {
+                    grid.querySelectorAll('article').forEach(resizeItem);
+                }
+
+                grid.querySelectorAll('img').forEach((item) => {
+                    if (!item.complete) item.addEventListener('load', resizeAll, { once: true });
+                });
+
+                window.addEventListener('resize', resizeAll);
+                resizeAll();
+            });
+            </script>
+            
     </body>
 </html>
